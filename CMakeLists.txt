@@ -1,0 +1,31 @@
+PROJECT (ASECP)
+cmake_minimum_required(VERSION 2.8)
+
+SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+
+SET (LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+LINK_DIRECTORIES(${LIBRARY_OUTPUT_PATH})
+
+set(CMAKE_DEBUG_POSTFIX "d")
+
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
+
+
+FIND_PACKAGE(Poco REQUIRED Net Foundation)
+#IF(Poco_FOUND)
+  INCLUDE_DIRECTORIES(${Poco_INCLUDE_DIRS})
+  LINK_DIRECTORIES(${Poco_LIBRARY_DIR})
+  add_definitions(-DPOCO_STATIC -DPOCO_NO_AUTOMATIC_LIBS)
+#ENDIF(Poco_FOUND)
+
+FIND_PACKAGE(Angelscript REQUIRED COMPONENTS scriptarray scriptstdstring scriptbuilder scripthandle scriptany)
+
+INCLUDE_DIRECTORIES(${Angelscript_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES(${Angelscript_ADDON_DIR})
+
+INCLUDE_DIRECTORIES(include)
+
+
+add_subdirectory(src)
